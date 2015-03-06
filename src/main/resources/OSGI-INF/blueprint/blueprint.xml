@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd">
+
+    <!-- get configuration admin service -->
+    <reference id="configurationAdmin" interface="org.osgi.service.cm.ConfigurationAdmin"/>
+
+    <!-- interceptor injector for existing CXF buses -->
+    <bean id="injector" class="org.test.interceptor.InterceptorsInjector" init-method="inject">
+        <property name="buses" ref="buses" />
+        <property name="configurationAdmin" ref="configurationAdmin" />
+        <property name="insertLog" ref="insertLog"/>
+    </bean>
+
+    <!-- CXF bus services -->
+    <reference-list id="buses" interface="org.apache.cxf.Bus" filter="(cxf.bus.id=*)" availability="optional">
+        <reference-listener bind-method="busRegistered">
+            <bean class="org.test.interceptor.CxfListener">
+                <property name="configurationAdmin" ref="configurationAdmin"/>
+                <property name="insertLog" ref="insertLog"/>
+            </bean>
+        </reference-listener>
+    </reference-list>
+
+    <!-- authorization
+    <bean id="syncopeValidator" class="org.synotis.interceptor.SyncopeValidator">
+        <property name="configurationAdmin" ref="configurationAdmin" />
+    </bean>-->
+    <bean id="insertLog" class="org.test.interceptor.Basic.BasicInterceptor">
+        <!--<property name="validator" ref="syncopeValidator"/>-->
+        <property name="configurationAdmin" ref="configurationAdmin"/>
+    </bean>
+
+</blueprint>
