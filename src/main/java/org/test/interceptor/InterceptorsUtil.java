@@ -82,31 +82,6 @@ public class InterceptorsUtil {
     }
 
     /**
-     * Get the REST API address of Syncope.
-     *
-     * @return the REST API address of Syncope.
-     */
-
-/*XMT
-    public String getSyncopeAddress() throws Exception {
-        Configuration configuration = configurationAdmin.getConfiguration(CONFIG_PID);
-        if (configuration == null) {
-            LOGGER.error("Configuration {} not found", CONFIG_PID);
-            throw new IllegalStateException("Configuration " + CONFIG_PID + " not found");
-        }
-        Dictionary properties = configuration.getProperties();
-        if (properties != null) {
-            Object address = properties.get("syncope.address");
-            if (address != null) {
-                LOGGER.debug("Found syncope.address property: {}", address);
-                return ((String) address);
-            }
-        }
-        LOGGER.error("syncope.address property not found in the configuration");
-        throw new IllegalStateException("syncope.address property not found in the configuration");
-    }
-XMT*/
-    /**
      * Check if a bus ID is defined in the configuration
      *
      * @param id the CXF bus ID to check.

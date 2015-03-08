@@ -58,9 +58,4 @@ public class InterceptorsInjector {
         this.insertLog = insertLog;
     }
 
-/*XMT
-    public Interceptor getAuthenticator() {
-        return this.authenticator;
-    }
-XMT*/
 }
